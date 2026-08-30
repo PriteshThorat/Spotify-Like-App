@@ -14,7 +14,12 @@ const ControlCenter = () => {
     }
 
     const togglePlayback = async(playback: State | undefined) => {
-        const currentTrack = await TrackPlayer.getActiveTrackIndex()
+        if (playback === State.Playing || playback === State.Buffering) {
+            await TrackPlayer.pause()
+        } else {
+            await TrackPlayer.play()
+        }
+        /*const currentTrack = await TrackPlayer.getActiveTrackIndex()
 
         if (currentTrack !== null) {
             if (
@@ -25,7 +30,7 @@ const ControlCenter = () => {
             } else {
                 await TrackPlayer.pause()
             }
-        }
+        }*/
     }
 
     return (

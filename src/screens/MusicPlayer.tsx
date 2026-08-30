@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Dimensions, FlatList, Image, StyleSheet, View } from "react-native"
-import { Event, Track, useTrackPlayerEvents } from "react-native-track-player"
+import TrackPlayer, { Event, Track, useTrackPlayerEvents } from "react-native-track-player"
 import playlistData from "../constants"
 import SongInfo from "../components/SongInfo"
 import SongSlider from "../components/SongSlider"
@@ -18,6 +18,16 @@ const MusicPlayer = () => {
             setTrack(null)
         }
     })
+
+    useEffect(() => {
+        let mounted = true
+
+        TrackPlayer.getActiveTrack().then((t) => {
+            if (mounted) setTrack(t ?? playlistData[0])
+        }).catch(() => {})
+    
+        return () => { mounted = false }
+    }, [])
 
     const renderArtwork = () => {
         return (
