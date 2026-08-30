@@ -48,9 +48,6 @@ const ControlCenter = () => {
                             size={40} />
                     )
                 }
-                <SkipBack 
-                    color="#FFFFFF"
-                    size={75} />
             </Pressable>
 
             <Pressable onPress={skipToNext} >

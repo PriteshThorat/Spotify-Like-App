@@ -1,7 +1,17 @@
 import TrackPlayer, { Event, RepeatMode } from "react-native-track-player"
 import playlistData from "./src/constants"
 
-const setupPlayer = async() => {
+const setupPlayer = async(): Promise<boolean> => {
+    try {
+        await TrackPlayer.setupPlayer()
+        return true
+    } catch (error) {
+        console.error("[TrackPlayer] setupPlayer failed:", error)
+        return false
+    }
+}
+
+/*const setupPlayer = async() => {
     let isSetup = false
 
     try {
@@ -15,7 +25,7 @@ const setupPlayer = async() => {
     } finally {
         return isSetup
     }
-}
+}*/
 
 const addTrack = async() => {
     await TrackPlayer.add(playlistData)
