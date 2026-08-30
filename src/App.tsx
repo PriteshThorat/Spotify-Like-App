@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { ActivityIndicator, StatusBar, StyleSheet, Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { ActivityIndicator, StatusBar, StyleSheet, Text } from 'react-native'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { setupPlayer, addTrack } from '../musicPlayerServices'
 import MusicPlayer from './screens/MusicPlayer'
 
@@ -17,9 +17,9 @@ const App = () => {
         try {
           const isSetup = await setupPlayer()
 
-          if (!isSetup) { 
+          if (!isSetup) {
             setError('Player failed to initialise. Check the Metro console.');
-            return 
+            return
           }
 
           await addTrack()
@@ -28,39 +28,46 @@ const App = () => {
         } catch (e) {
           setError(e instanceof Error ? e.message : String(e))
         }
-        /*const isSetup = await setupPlayer()
-
-        if (isSetup) {
-          await addTrack()
-        }
-
-        setIsPlayerReady(isSetup)*/
       }
     )()
   }, [])
 
   if (!isPlayerReady) {
     return (
-      <SafeAreaView>
-        <ActivityIndicator />
-        {error && <Text style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>{error}</Text>}
+      <SafeAreaView style={styles.loading}>
+        <StatusBar barStyle="light-content" />
+        <ActivityIndicator size="large" color="#1DB954" />
+        {error && <Text style={styles.errorText}>{error}</Text>}
       </SafeAreaView>
     )
   }
 
   return (
-   
-     
-      <View style={styles.container}>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="light-content" />
         <MusicPlayer />
-      </View>
-    
+      </SafeAreaView>
+    </SafeAreaProvider>
   )
 }
 
 const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#001d23'
+  },
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#001d23'
+  },
+  errorText: {
+    marginTop: 16,
+    paddingHorizontal: 24,
+    color: '#ff5252',
+    textAlign: 'center'
   }
 })
 

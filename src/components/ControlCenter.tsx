@@ -36,18 +36,20 @@ const ControlCenter = () => {
                     size={40} />
             </Pressable>
 
-            <Pressable onPress={() => togglePlayback(playbackState.state)} >
-                {
-                    playbackState.state === State.Playing ? (
-                        <Pause 
-                            color="#FFFFFF"
-                            size={40} />
-                    ) : (
-                        <Play 
-                            color="#FFFFFF"
-                            size={40} />
-                    )
-                }
+            <Pressable 
+                style={styles.playButton} 
+                onPress={() => togglePlayback(playbackState.state)} >
+                    {
+                        playbackState.state === State.Playing ? (
+                            <Pause 
+                                color="#FFFFFF"
+                                size={40} />
+                        ) : (
+                            <Play 
+                                color="#FFFFFF"
+                                size={40} />
+                        )
+                    }
             </Pressable>
 
             <Pressable onPress={skipToNext} >
@@ -65,7 +67,9 @@ const styles = StyleSheet.create({
 
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 40
     },
     icon: {
         color: '#FFFFFF'

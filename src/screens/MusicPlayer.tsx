@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Dimensions, FlatList, Image, StyleSheet, View } from "react-native"
-import TrackPlayer, { Event, Track, useTrackPlayerEvents } from "react-native-track-player"
+import { Event, Track, useTrackPlayerEvents } from "react-native-track-player"
 import playlistData from "../constants"
 import SongInfo from "../components/SongInfo"
 import SongSlider from "../components/SongSlider"
@@ -41,6 +41,7 @@ const MusicPlayer = () => {
                 horizontal
                 data={playlistData}
                 renderItem={renderArtwork}
+                showsHorizontalScrollIndicator={false}
                 keyExtractor={song => song.id.toString()} />
 
             <SongInfo track={track} />
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
         height: 300
     },
     albumArtImg: {
+        width: '100%',
         height: '100%',
         borderRadius: 4
     }
